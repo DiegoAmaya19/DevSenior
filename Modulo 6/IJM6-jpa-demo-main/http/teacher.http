@@ -1,0 +1,32 @@
+###
+GET http://localhost:8080/api/teachers
+
+###
+GET http://localhost:8080/api/teachers/by_city/Iba
+
+###
+GET http://localhost:8080/api/teachers/by_name?name1=Cesar&lastname1=Diaz&name2=Augusto&lastname2=Arriaga
+
+###
+GET http://localhost:8080/api/teachers/by_name?lastname2=Rivera
+
+###
+GET http://localhost:8080/api/teachers/salary?salary=120000
+
+###
+POST http://localhost:8080/api/teachers
+Content-Type: application/json
+
+{
+    "document": 123456782,
+    "firstName": "Diego",
+    "secondName": "Johan",
+    "firstLastName": "Caceres",
+    "secondLastName": "Rivera",
+    "email": "djcaceres@email.com",
+    "phoneNumber": "5556661112",
+    "address": "Calle 1 # 2 - 03",
+    "additionalAddress": "Junto a la Clinica del Niño",
+    "salary": 120000,
+    "city": "Cali"
+}

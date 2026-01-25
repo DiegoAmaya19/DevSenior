@@ -1,0 +1,22 @@
+###
+GET http://localhost:8080/api/cities
+
+###
+POST http://localhost:8080/api/cities
+Content-Type: application/json
+
+{
+  "name": "Bogota",
+  "department": "Cundinamarca"
+}
+
+###
+PUT http://localhost:8080/api/cities/Cali
+Content-Type: application/json
+
+{
+  "department": "Valle"
+}
+
+### Lista de ciudades por departamento
+GET http://localhost:8080/api/cities/by_department/E
