@@ -1,0 +1,17 @@
+###
+GET  http://localhost:8080/api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiQ2VzYXIgVWFndXN0byBEaWF6IiwiUm9sZSI6IkFETUlOIiwic3ViIjoiY2RpenNzIiwiaWF0IjoxNzYyMTkwNzkwLCJleHAiOjE3NjIxOTA4OTB9.f179NAOw1l30DV1t5oreFq7NXrGjokceEhFMooBaRy4
+Accept: application/json
+
+###
+POST http://localhost:8080/api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiQ2VzYXIgVWFndXN0byBEaWF6IiwiUm9sZSI6IkFETUlOIiwic3ViIjoiY2RpenNzIiwiaWF0IjoxNzYyMTkxMTMyLCJleHAiOjE3NjIxOTEyMzJ9.Ffvwp1tUbBFBVcobobjcRYZIWjLwEjcvXXcbJ9Ks1nM
+Content-Type: application/json
+
+{
+  "name": "Maria Suarez",
+  "userName": "msuarez",
+  "password": "msuarez123",
+  "role": "USER",
+  "email": "msuarez@gmail"
+  }
