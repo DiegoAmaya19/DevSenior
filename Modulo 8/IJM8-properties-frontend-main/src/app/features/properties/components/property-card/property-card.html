@@ -1,0 +1,12 @@
+<div class="property-card">
+  <img class="property-image" [src]="property().image" [alt]="property().address">
+  <div>
+    <h2 class="address">{{ property().address }}, {{ property().city }}</h2>
+    <p class="description">{{ property().description }}</p>
+    <div class="values">
+      <span class="price">{{ property().price }}</span>
+      <span class="rooms">{{ property().bedrooms }} Hab. | {{ property().bathrooms }} Baños</span>
+    </div>
+    <button class="details-button" (click)="onShowDetails()">Ver detalles</button>
+  </div>
+</div>

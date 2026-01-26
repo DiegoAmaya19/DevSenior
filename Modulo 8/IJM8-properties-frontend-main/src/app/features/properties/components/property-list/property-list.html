@@ -1,0 +1,29 @@
+<div class="container">
+  <app-property-search placeholder="Filtrar por ciudad" (search)="onSearchCityButton($event)"></app-property-search>
+  <app-property-search placeholder="Filtrar por descripcion" (search)="onSearchDescriptionButton($event)"></app-property-search>
+
+  @if(isLoading()){
+  <!-- Mostrar el componente cargando -->
+  <section class="row">
+    <div class="loader"></div>
+    <h5>Cargando..</h5>
+  </section>
+  } @else {
+  <section>
+    <div class="d-flex justify-content-between mt-3 mb-3">
+      <h3>Hay un total de {{ total() }} propiedades</h3>
+      <button class="btn btn-secondary" routerLink="/properties/new">Nueva propiedad</button>
+    </div>
+  </section>
+
+  <section class="row">
+    @for (property of properties(); track property.id) {
+    <app-property-card class="col-12 col-lg-6 col-xl-4" [property]="property"
+      (showDetails)="showDetails($event)"></app-property-card>
+    }
+  </section>
+  }
+
+
+
+</div>
