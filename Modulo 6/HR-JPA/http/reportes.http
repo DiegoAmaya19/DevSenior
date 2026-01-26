@@ -1,0 +1,18 @@
+###
+Get http://localhost:8080/api/hr/reports/employees
+
+###
+Get http://localhost:8080/api/hr/reports/employees_department/IT
+
+###
+GET http://localhost:8080/api/hr/reports/employees/department?department=8
+
+
+### Esto busca empleados por country con metodo de JPA derivada de nombres interpretados
+GET http://localhost:8080/api/hr/reports/employees/country?country=CA
+
+### Esto busca empleados por country con metodo JPA usando @Query Nativo en repository
+GET http://localhost:8080/api/hr/reports/employees/country_id?country=CA
+
+### Esto busca empleados por country con metodo JPA usando @Query JPQL
+GET http://localhost:8080/api/hr/reports/employees/country_id?country=MO
