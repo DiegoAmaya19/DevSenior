@@ -10,7 +10,7 @@ export class PropertyService {
 
   constructor() {
     this.loadProperties();
-    /*
+    
     this.properties = [
       {
         id: 1,
@@ -54,7 +54,7 @@ export class PropertyService {
       }
 
     ];
-    */
+    
   }
 
   private loadProperties(): void {
