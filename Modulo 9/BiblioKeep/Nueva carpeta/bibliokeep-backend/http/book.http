@@ -1,0 +1,9 @@
+### Obtener todos los libros del usuario
+GET http://localhost:8080/api/books
+X-User-Id: 00000000-0000-0000-0000-000000000000
+
+###
+
+### Obtener un libro por ID
+GET http://localhost:8080/api/books/1
+X-User-Id: 00000000-0000-0000-0000-000000000000
