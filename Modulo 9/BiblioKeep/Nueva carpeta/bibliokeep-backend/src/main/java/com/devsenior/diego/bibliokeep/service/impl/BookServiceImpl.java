@@ -4,7 +4,6 @@ import com.devsenior.diego.bibliokeep.mapper.BookMapper;
 import com.devsenior.diego.bibliokeep.model.BookStatus;
 import com.devsenior.diego.bibliokeep.model.dto.request.BookRequestDTO;
 import com.devsenior.diego.bibliokeep.model.dto.response.BookResponseDTO;
-import com.devsenior.diego.bibliokeep.model.entity.Book;
 import com.devsenior.diego.bibliokeep.repository.BookRepository;
 import com.devsenior.diego.bibliokeep.service.BookService;
 import lombok.RequiredArgsConstructor;

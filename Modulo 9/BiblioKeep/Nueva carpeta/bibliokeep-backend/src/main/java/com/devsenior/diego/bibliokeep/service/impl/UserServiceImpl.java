@@ -3,7 +3,6 @@ package com.devsenior.diego.bibliokeep.service.impl;
 import com.devsenior.diego.bibliokeep.mapper.UserMapper;
 import com.devsenior.diego.bibliokeep.model.dto.request.UserRequestDTO;
 import com.devsenior.diego.bibliokeep.model.dto.response.UserResponseDTO;
-import com.devsenior.diego.bibliokeep.model.entity.User;
 import com.devsenior.diego.bibliokeep.repository.UserRepository;
 import com.devsenior.diego.bibliokeep.service.UserService;
 import lombok.RequiredArgsConstructor;

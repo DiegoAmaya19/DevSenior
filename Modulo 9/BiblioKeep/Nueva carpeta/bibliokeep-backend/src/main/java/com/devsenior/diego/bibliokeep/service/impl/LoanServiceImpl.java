@@ -3,8 +3,6 @@ package com.devsenior.diego.bibliokeep.service.impl;
 import com.devsenior.diego.bibliokeep.mapper.LoanMapper;
 import com.devsenior.diego.bibliokeep.model.dto.request.LoanRequestDTO;
 import com.devsenior.diego.bibliokeep.model.dto.response.LoanResponseDTO;
-import com.devsenior.diego.bibliokeep.model.entity.Book;
-import com.devsenior.diego.bibliokeep.model.entity.Loan;
 import com.devsenior.diego.bibliokeep.repository.BookRepository;
 import com.devsenior.diego.bibliokeep.repository.LoanRepository;
 import com.devsenior.diego.bibliokeep.service.LoanService;
@@ -54,7 +52,7 @@ public class LoanServiceImpl implements LoanService {
     public LoanResponseDTO findById(Long id, UUID ownerId) {
 
         var loan = loanRepository.findByIdAndOwnerId(id, ownerId)
-        
+
                 .orElseThrow(() -> new RuntimeException("Préstamo no encontrado o no pertenece al usuario"));
         return loanMapper.toResponseDTO(loan);
     }
