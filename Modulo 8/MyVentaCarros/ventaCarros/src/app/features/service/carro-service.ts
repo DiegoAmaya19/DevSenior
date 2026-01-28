@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
+import {Injectable} form "@angular/core";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class CarroService {
-  crateCarro(nuwCarro: carro): void {
-    
-  }
-
+  // Define the expected properties of a carro object
+  // Example properties:
+  marca: string;
+  modelo: string;
+  anio: number;
+  [key: string]: any; // Adjust as needed
 }
