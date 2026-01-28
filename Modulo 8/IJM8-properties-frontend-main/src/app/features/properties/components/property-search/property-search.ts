@@ -11,7 +11,7 @@ export class PropertySearch {
   readonly placeholder = input.required<string>();
   readonly search = output<string>();
 
-  protected queryString = signal<string>("");
+  protected queryString = signal<string>('');
   protected isValid = computed<boolean>(() => this.queryString().trim().length !== 0);
 
   onSearch(): void {
