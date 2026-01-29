@@ -1,0 +1,130 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-slate-900">Mi Biblioteca</h1>
+      <p class="mt-2 text-gray-600">
+        {{ totalBooks() }} libros · {{ booksRead() }} leídos · {{ currentlyReading() }} leyendo
+      </p>
+    </div>
+    <app-button
+      label="Agregar Libro"
+      variant="primary"
+      (onClick)="onAddBook()"
+    ></app-button>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="flex gap-2">
+    <input
+      type="text"
+      [value]="searchInput()"
+      (input)="onSearchChange($event.target.value)"
+      placeholder="Buscar por título o autor..."
+      class="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+    />
+    @if (searchInput()) {
+      <app-button
+        label="Limpiar"
+        variant="secondary"
+        (onClick)="clearSearch()"
+      ></app-button>
+    }
+  </div>
+
+  <!-- Status Filter Tabs -->
+  <div class="flex flex-wrap gap-2 border-b border-gray-200">
+    <button
+      (click)="onStatusFilterChange('ALL')"
+      [class]="'px-3 py-2 text-sm font-medium transition-colors ' + (statusFilter() === 'ALL' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-600 hover:text-gray-900')"
+    >
+      Todos
+    </button>
+    @for (status of statuses; track status) {
+      <button
+        (click)="onStatusFilterChange(status)"
+        [class]="'px-3 py-2 text-sm font-medium transition-colors ' + (statusFilter() === status ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-600 hover:text-gray-900')"
+      >
+        {{ status }}
+      </button>
+    }
+  </div>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="flex min-h-96 items-center justify-center">
+      <div class="text-center">
+        <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600"></div>
+        <p class="mt-4 text-gray-600">Cargando libros...</p>
+      </div>
+    </div>
+  }
+  
+  @if (!isLoading() && filteredBooks().length > 0) {
+    <!-- Books Grid -->
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      @for (book of filteredBooks(); track book.id) {
+        <div class="relative">
+          <app-book-card [book]="book"></app-book-card>
+
+          <!-- Status Dropdown -->
+          <div class="mt-2">
+            <select
+              [value]="book.status"
+              (change)="onStatusChange(book.id, $event)"
+              class="w-full rounded border border-gray-300 px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+            >
+              @for (status of statuses; track status) {
+                <option [value]="status">{{ status }}</option>
+              }
+            </select>
+          </div>
+
+          <!-- Rating Control -->
+          <div class="mt-2 flex items-center gap-1">
+            @for (i of [1, 2, 3, 4, 5]; track i) {
+              <button
+                (click)="onRatingChange(book.id, i)"
+                class="cursor-pointer text-lg"
+                [class]="i <= (book.rating ?? 0) ? 'text-yellow-400' : 'text-gray-300'"
+              >
+                ★
+              </button>
+            }
+          </div>
+
+          <!-- Delete Button -->
+          <div class="mt-3">
+            <button
+              (click)="onDeleteBook(book.id)"
+              class="w-full rounded bg-red-50 px-2 py-1 text-xs font-medium text-red-600 hover:bg-red-100"
+            >
+              Eliminar
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  @if (!isLoading() && filteredBooks().length === 0) {
+    <!-- Empty State -->
+    <div class="flex min-h-96 items-center justify-center rounded-lg bg-white">
+      <div class="text-center">
+        <p class="text-gray-600">
+          @if (searchQuery()) {
+            No se encontraron libros con "{{ searchQuery() }}"
+          } @else {
+            No tienes libros aún
+          }
+        </p>
+        <p class="mt-2 text-sm text-gray-500">
+          @if (!searchQuery()) {
+            Comienza agregando tu primer libro
+          }
+        </p>
+      </div>
+    </div>
+  }
+</div>
+

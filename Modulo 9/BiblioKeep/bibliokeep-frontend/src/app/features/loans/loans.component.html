@@ -1,0 +1,75 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-slate-900">Préstamos</h1>
+      <p class="mt-2 text-gray-600">Gestiona los libros que has prestado</p>
+    </div>
+    <app-button
+      label="Nuevo Préstamo"
+      variant="primary"
+      (onClick)="onCreateLoan()"
+    ></app-button>
+  </div>
+
+  @if (loans().length > 0) {
+    <div class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+      <table class="w-full">
+        <thead class="border-b border-gray-200 bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+              Contacto
+            </th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+              Fecha Préstamo
+            </th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+              Fecha Vencimiento
+            </th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+              Estado
+            </th>
+            <th class="px-6 py-3 text-right text-sm font-semibold text-gray-900">
+              Acciones
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (loan of loans(); track loan.id) {
+            <tr class="border-b border-gray-200 hover:bg-gray-50">
+              <td class="px-6 py-4 text-sm text-gray-900">{{ loan.contactName }}</td>
+              <td class="px-6 py-4 text-sm text-gray-600">{{ loan.loanDate }}</td>
+              <td class="px-6 py-4 text-sm text-gray-600">{{ loan.dueDate }}</td>
+              <td class="px-6 py-4 text-sm">
+                <span
+                  [class]="{
+                    'inline-block rounded px-2 py-1 text-xs font-semibold': true,
+                    'bg-green-100 text-green-800': loan.returned,
+                    'bg-yellow-100 text-yellow-800': !loan.returned
+                  }"
+                >
+                  {{ loan.returned ? 'Devuelto' : 'Activo' }}
+                </span>
+              </td>
+              <td class="px-6 py-4 text-right">
+                @if (!loan.returned) {
+                  <app-button
+                    label="Marcar Devuelto"
+                    variant="secondary"
+                    (onClick)="onMarkReturned(loan.id)"
+                  ></app-button>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  } @else {
+    <div class="flex min-h-96 items-center justify-center rounded-lg bg-white">
+      <div class="text-center">
+        <p class="text-gray-600">No tienes préstamos activos</p>
+        <p class="mt-2 text-sm text-gray-500">Crea uno para comenzar</p>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,59 @@
+<div class="space-y-6">
+  <div>
+    <h1 class="text-3xl font-bold text-slate-900">Dashboard</h1>
+    <p class="mt-2 text-gray-600">Bienvenido de vuelta a BiblioKeep</p>
+  </div>
+
+  @if (stats()) {
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <app-stats-widget
+        [stat]="{
+          label: 'Libros Leídos',
+          value: stats()!.booksRead,
+          icon: 'BookOpen',
+          color: 'green'
+        }"
+      ></app-stats-widget>
+      <app-stats-widget
+        [stat]="{
+          label: 'Leyendo Ahora',
+          value: stats()!.currentlyReading,
+          icon: 'BookMarked',
+          color: 'yellow'
+        }"
+      ></app-stats-widget>
+      <app-stats-widget
+        [stat]="{
+          label: 'Préstamos Activos',
+          value: stats()!.activeLoans,
+          icon: 'HandshakeIcon',
+          color: 'blue'
+        }"
+      ></app-stats-widget>
+      <app-stats-widget
+        [stat]="{
+          label: 'Total de Libros',
+          value: stats()!.totalBooks,
+          icon: 'Library',
+          color: 'purple'
+        }"
+      ></app-stats-widget>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="rounded-lg bg-white p-6 shadow-sm">
+      <h2 class="text-lg font-semibold text-slate-900">Meta Anual de Lectura</h2>
+      <p class="mt-1 text-sm text-gray-600">
+        {{ stats()!.annualProgress }} de {{ stats()!.annualGoal }} libros
+      </p>
+      <div class="mt-4 h-4 overflow-hidden rounded-full bg-gray-200">
+        <div
+          class="h-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all"
+          [style.width.%]="
+            (stats()!.annualProgress / stats()!.annualGoal) * 100
+          "
+        ></div>
+      </div>
+    </div>
+  }
+</div>

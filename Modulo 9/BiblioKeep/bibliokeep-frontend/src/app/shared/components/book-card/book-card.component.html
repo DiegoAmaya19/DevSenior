@@ -1,0 +1,77 @@
+<div class="flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+  @if (book().thumbnail) {
+    <img
+      [src]="book().thumbnail"
+      alt="{{ book().title }}"
+      class="h-40 w-full object-cover"
+    />
+  } @else {
+    <div class="h-40 w-full bg-gradient-to-br from-blue-100 to-purple-100"></div>
+  }
+
+  <div class="flex flex-1 flex-col p-4">
+    <h3 class="font-semibold text-gray-900 line-clamp-2">{{ book().title }}</h3>
+    <p class="text-sm text-gray-600 line-clamp-1">
+    <!-- 
+        DOCUMENTACIÓN - Advertencia TypeScript (-998107)
+        
+        La advertencia indica que el operador opcional encadenado (?.) 
+        no es necesario en este caso.
+        
+        PROBLEMA:
+        - La propiedad 'authors' ya tiene un tipo que NO incluye 'null' 
+            o 'undefined'
+        - Por lo tanto, usar '?.' es innecesario
+        
+        SOLUCIÓN:
+        Reemplaza:
+            {{ book().authors?.join(', ') }}
+        
+        Por:
+            {{ book().authors.join(', ') }}
+        
+        EXPLICACIÓN del método join():
+        - join() es un método de Array que convierte todos los elementos 
+            de un arreglo en una cadena de texto
+        - Parámetro: el separador a usar entre elementos (en este caso ', ')
+        - Ejemplo: ['Autor1', 'Autor2', 'Autor3'].join(', ') 
+            retorna 'Autor1, Autor2, Autor3'
+        
+        RECOMENDACIÓN:
+        Elimina el '?.' ya que TypeScript ha detectado que authors 
+        siempre tendrá un valor definido.
+    -->
+      {{ book().authors.join(', ') }}
+    </p>
+
+    <div class="mt-3 flex items-center justify-between">
+      <span
+        [class]="{
+          'inline-block rounded px-2 py-1 text-xs font-semibold': true,
+          'bg-green-100 text-green-800': book().status === 'LEIDO',
+          'bg-yellow-100 text-yellow-800': book().status === 'LEYENDO',
+          'bg-blue-100 text-blue-800': book().status === 'COMPRADO',
+          'bg-gray-100 text-gray-800': book().status === 'DESEADO',
+          'bg-red-100 text-red-800': book().status === 'ABANDONADO'
+        }"
+      >
+        {{ book().status }}
+      </span>
+
+      @if (book().rating) {
+        <div class="flex gap-1">
+          @for (i of [1, 2, 3, 4, 5]; track i) {
+            <span
+              [class]="{
+                'text-yellow-400': i <= book().rating!,
+                'text-gray-300': i > book().rating!
+              }"
+            >
+              ★
+            </span>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div
+  class="rounded-lg p-6 shadow-sm"
+  [class]="'bg-gradient-to-br ' + (stat().color === 'green' ? 'from-green-50 to-green-100' : stat().color === 'yellow' ? 'from-yellow-50 to-yellow-100' : stat().color === 'blue' ? 'from-blue-50 to-blue-100' : 'from-purple-50 to-purple-100')"
+>
+  <div class="flex items-start justify-between">
+    <div>
+      <p class="text-sm font-medium text-gray-700">{{ stat().label }}</p>
+      <p
+        class="mt-2 text-3xl font-bold"
+        [class]="stat().color === 'green' ? 'text-green-900' : stat().color === 'yellow' ? 'text-yellow-900' : stat().color === 'blue' ? 'text-blue-900' : 'text-purple-900'"
+      >
+        {{ stat().value }}
+      </p>
+    </div>
+    @if (stat().icon) {
+      <lucide-icon
+        [name]="stat().icon!"
+        [ngClass]="{
+          'w-8 h-8 opacity-50': true,
+          'text-green-900': stat().color === 'green',
+          'text-yellow-900': stat().color === 'yellow',
+          'text-blue-900': stat().color === 'blue',
+          'text-purple-900': stat().color === 'purple'
+        }"
+      ></lucide-icon>
+    }
+  </div>
+</div>

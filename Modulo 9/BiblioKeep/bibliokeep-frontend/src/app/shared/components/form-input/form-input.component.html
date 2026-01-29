@@ -1,0 +1,14 @@
+<div class="flex flex-col gap-2">
+  @if (label()) {
+    <label class="text-sm font-medium text-gray-700">{{ label() }}</label>
+  }
+  <input
+    [(ngModel)]="value"
+    [type]="type()"
+    [placeholder]="placeholder()"
+    class="rounded-lg border border-gray-300 px-4 py-2 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none"
+  />
+  @if (error()) {
+    <p class="text-sm text-red-600">{{ error() }}</p>
+  }
+</div>
