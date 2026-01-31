@@ -35,7 +35,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<TeacherResponse> getByCity(String city) {
         return teacherRepository.findAllByCityNameContaining(city).stream()
-                .map(this::toResponse)
+                .map(toResponse)
                 .toList();
     }
 
@@ -76,7 +76,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<TeacherResponse> getBySalary(Double salary) {
         return teacherRepository.lookingBySalary(salary).stream()
-                .map(this::toResponse)
+                .map(toResponse)
                 .toList();
     }
 
