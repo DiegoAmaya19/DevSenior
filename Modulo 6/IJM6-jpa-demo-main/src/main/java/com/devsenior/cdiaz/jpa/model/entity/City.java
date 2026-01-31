@@ -16,8 +16,7 @@ public class City {
     @Column(name = "departamento", length = 100)
     private String department;
 
-    public City() {
-    }
+    public City() {}
 
     public City(String name) {
         this.name = name;
