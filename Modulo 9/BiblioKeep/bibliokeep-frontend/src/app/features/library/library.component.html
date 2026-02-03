@@ -95,12 +95,20 @@
 
           <!-- Delete Button -->
           <div class="mt-3">
-            <button
-              (click)="onDeleteBook(book.id)"
-              class="w-full rounded bg-red-50 px-2 py-1 text-xs font-medium text-red-600 hover:bg-red-100"
-            >
-              Eliminar
-            </button>
+            <div class="flex gap-2">
+              <button
+                (click)="onViewBook(book.id)"
+                class="flex-1 rounded bg-blue-50 px-2 py-1 text-xs font-medium text-blue-600 hover:bg-blue-100"
+              >
+                Ver
+              </button>
+              <button
+                (click)="onDeleteBook(book.id)"
+                class="flex-1 rounded bg-red-50 px-2 py-1 text-xs font-medium text-red-600 hover:bg-red-100"
+              >
+                Eliminar
+              </button>
+            </div>
           </div>
         </div>
       }
@@ -123,6 +131,24 @@
             Comienza agregando tu primer libro
           }
         </p>
+      </div>
+    </div>
+  }
+
+  @if (selectedBook()) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+      <div class="max-w-xl rounded bg-white p-6 shadow">
+        <div class="flex items-start justify-between">
+          <h2 class="text-xl font-semibold">{{ selectedBook()?.title }}</h2>
+          <button (click)="closeDetail()" class="text-gray-500 hover:text-gray-800">✕</button>
+        </div>
+        <p class="mt-2 text-sm text-gray-600">Autores: {{ (selectedBook()?.authors ?? []).join(', ') }}</p>
+        @if (selectedBook()?.description) {
+          <p class="mt-4 text-sm text-gray-700">{{ selectedBook()?.description }}</p>
+        }
+        <div class="mt-4 flex justify-end">
+          <button (click)="closeDetail()" class="rounded bg-blue-600 px-3 py-1 text-sm text-white">Cerrar</button>
+        </div>
       </div>
     </div>
   }

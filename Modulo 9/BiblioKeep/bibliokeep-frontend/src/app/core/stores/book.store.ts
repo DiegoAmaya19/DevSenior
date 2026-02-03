@@ -15,12 +15,14 @@ export class BookStoreService {
   // State signals
   private readonly booksState = signal<Book[]>([]);
   private readonly isLoadingState = signal(false);
+  private readonly selectedBookState = signal<Book | null>(null);
   private readonly searchQueryState = signal('');
   private readonly statusFilterState = signal<BookStatus | 'ALL'>('ALL');
 
   // Public signals (read-only)
   readonly books = this.booksState.asReadonly();
   readonly isLoading = this.isLoadingState.asReadonly();
+  readonly selectedBook = this.selectedBookState.asReadonly();
   readonly searchQuery = this.searchQueryState.asReadonly();
   readonly statusFilter = this.statusFilterState.asReadonly();
 
@@ -61,6 +63,30 @@ export class BookStoreService {
 
   constructor() {
     this.loadBooks();
+  }
+
+  /**
+   * Cargar detalle de un libro por ID
+   */
+  loadBookDetail(id: number): void {
+    this.isLoadingState.set(true);
+    this.bookService.getBook(id).subscribe({
+      next: (book) => {
+        this.selectedBookState.set(book);
+        this.isLoadingState.set(false);
+      },
+      error: (err) => {
+        console.error('Error loading book:', err);
+        this.isLoadingState.set(false);
+      },
+    });
+  }
+
+  /**
+   * Limpiar selección de libro
+   */
+  clearSelectedBook(): void {
+    this.selectedBookState.set(null);
   }
 
   /**

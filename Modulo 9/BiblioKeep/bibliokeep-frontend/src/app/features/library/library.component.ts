@@ -33,6 +33,9 @@ export class LibraryComponent {
   // Local state for search input
   readonly searchInput = signal('');
 
+  // Selected book detail
+  readonly selectedBook = this.bookStore.selectedBook;
+
   readonly statuses: BookStatus[] = [
     'DESEADO',
     'COMPRADO',
@@ -100,5 +103,19 @@ export class LibraryComponent {
   onAddBook(): void {
     // TODO: Implementar modal para agregar libro
     console.log('Abrir modal para agregar libro');
+  }
+
+  /**
+   * Ver detalle de un libro
+   */
+  onViewBook(bookId: number): void {
+    this.bookStore.loadBookDetail(bookId);
+  }
+
+  /**
+   * Cerrar panel de detalle
+   */
+  closeDetail(): void {
+    this.bookStore.clearSelectedBook();
   }
 }

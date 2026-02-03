@@ -7,3 +7,8 @@ X-User-Id: 00000000-0000-0000-0000-000000000000
 ### Obtener un libro por ID
 GET http://localhost:8080/api/books/1
 X-User-Id: 00000000-0000-0000-0000-000000000000
+
+###
+GET  http://localhost:8080/api/books
+Authorization: Bearer d1ee74e1-45f0-4686-931a-e414ff14b09c
+Accept: application/json
