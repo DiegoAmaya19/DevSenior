@@ -68,4 +68,5 @@ public class Book {
     @NotNull(message = "El estado de préstamo es obligatorio")
     @Builder.Default
     private Boolean isLent = false;
+    
 }

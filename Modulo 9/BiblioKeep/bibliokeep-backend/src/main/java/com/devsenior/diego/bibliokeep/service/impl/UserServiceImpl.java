@@ -6,7 +6,7 @@ import com.devsenior.diego.bibliokeep.model.dto.response.UserResponseDTO;
 import com.devsenior.diego.bibliokeep.repository.UserRepository;
 import com.devsenior.diego.bibliokeep.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
+// import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final PasswordEncoder passwordEncoder;
+    // private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
         }
 
         var user = userMapper.toEntity(request);
-        user.setPassword(passwordEncoder.encode(request.password()));
+        // user.setPassword(passwordEncoder.encode(request.password()));
         user = userRepository.save(user);
 
         return userMapper.toResponseDTO(user);
@@ -63,9 +63,9 @@ public class UserServiceImpl implements UserService {
 
         userMapper.updateEntityFromDTO(request, user);
         
-        if (request.password() != null && !request.password().isEmpty()) {
-            user.setPassword(passwordEncoder.encode(request.password()));
-        }
+        // if (request.password() != null && !request.password().isEmpty()) {
+        //     user.setPassword(passwordEncoder.encode(request.password()));
+        // }
 
         user = userRepository.save(user);
 

@@ -64,4 +64,9 @@ public class BookController {
         var ownerId = UUID.fromString(userId);
         bookService.delete(id, ownerId);
     }
+
+    @GetMapping("/all")
+    public List<BookResponseDTO> todosLosLibros() {
+        return bookService.todosLosLibros();
+    }
 }
