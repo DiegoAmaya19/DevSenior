@@ -12,3 +12,6 @@ X-User-Id: 00000000-0000-0000-0000-000000000000
 GET  http://localhost:8080/api/books
 Authorization: Bearer d1ee74e1-45f0-4686-931a-e414ff14b09c
 Accept: application/json
+
+###
+GET http://localhost:8080/api/stats/dashboard/f53b6038-52dd-45de-a123-1ebcd597efd5
