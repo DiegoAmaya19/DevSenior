@@ -14,8 +14,8 @@ import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:4200") // Permite el acceso desde Angular
 @RestController
-@RequestMapping("/api/books")
 @AllArgsConstructor
+@RequestMapping("/api/books")
 public class BookController {
 
     private final BookService bookService;

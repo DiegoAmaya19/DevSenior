@@ -15,7 +15,7 @@ public class StatsController {
     private final StatsService statsService;
 
     @GetMapping("/dashboard")
-    public DashboardResponseDTO getDashboard(@RequestHeader("X-User-Id") String userId) {
+    public DashboardResponseDTO getDashboard(String userId) {
         var ownerId = UUID.fromString(userId);
         return statsService.getDashboard(ownerId);
     }

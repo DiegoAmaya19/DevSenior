@@ -24,7 +24,7 @@ export class BookService {
    * GET /api/books - Obtener todos los libros del usuario
    */
   getBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>(this.apiUrl);
+    return this.http.get<Book[]>(this.apiUrl+"/all");
   }
 
   /**

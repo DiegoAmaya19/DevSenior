@@ -1,7 +1,6 @@
 import { Component, signal, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { LucideAngularModule } from 'lucide-angular';
 import { AuthService } from '../../services/auth.service';
 
 /**
@@ -14,7 +13,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule, LucideAngularModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,11 +27,11 @@ export class MainLayoutComponent {
   // Current user
   user = signal(this.authService.getCurrentUser());
 
-  // Navigation items with lucide icon names
+  // Navigation items with emojis
   navItems = [
-    { label: 'Dashboard', route: '/dashboard', icon: 'BarChart3' },
-    { label: 'Mi Biblioteca', route: '/library', icon: 'BookOpen' },
-    { label: 'Préstamos', route: '/loans', icon: 'HandshakeIcon' },
+    { label: 'Dashboard', route: '/dashboard', emoji: '📊' },
+    { label: 'Mi Biblioteca', route: '/library', emoji: '📚' },
+    { label: 'Préstamos', route: '/loans', emoji: '🤝' },
   ];
 
   /**

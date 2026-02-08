@@ -11,11 +11,13 @@ import { Component, input, output, ChangeDetectionStrategy } from '@angular/core
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
+  //inputs
   label = input<string>('Click me');
   variant = input<'primary' | 'secondary' | 'danger'>('primary');
   type = input<'button' | 'submit' | 'reset'>('button');
   isDisabled = input<boolean>(false);
 
+  //outputs
   onClick = output<void>();
 
   getButtonClass(): string {
