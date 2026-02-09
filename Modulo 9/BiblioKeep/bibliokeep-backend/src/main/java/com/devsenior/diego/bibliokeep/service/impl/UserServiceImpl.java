@@ -3,6 +3,7 @@ package com.devsenior.diego.bibliokeep.service.impl;
 import com.devsenior.diego.bibliokeep.mapper.UserMapper;
 import com.devsenior.diego.bibliokeep.model.dto.request.UserRequestDTO;
 import com.devsenior.diego.bibliokeep.model.dto.response.UserResponseDTO;
+import com.devsenior.diego.bibliokeep.model.entity.User;
 import com.devsenior.diego.bibliokeep.repository.UserRepository;
 import com.devsenior.diego.bibliokeep.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -79,5 +81,15 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Usuario no encontrado");
         }
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean exisitsEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

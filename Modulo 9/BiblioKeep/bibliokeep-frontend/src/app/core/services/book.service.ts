@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Book } from '../models';
 
@@ -24,7 +24,12 @@ export class BookService {
    * GET /api/books - Obtener todos los libros del usuario
    */
   getBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>(this.apiUrl+"/all");
+
+    const headers = new HttpHeaders({
+      'X-User-Id': 'f53b6038-52dd-45de-a123-1ebcd597efd5'
+    });
+
+    return this.http.get<Book[]>(this.apiUrl,{headers});
   }
 
   /**

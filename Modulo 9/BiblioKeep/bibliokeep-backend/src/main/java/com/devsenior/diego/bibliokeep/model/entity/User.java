@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -46,4 +47,12 @@ public class User {
     @NotNull(message = "La meta anual es obligatoria")
     @Builder.Default
     private Integer annualGoal = 12;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "user_roles",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "roles_id")
+    )
+    private List<Role> roles;
 }
