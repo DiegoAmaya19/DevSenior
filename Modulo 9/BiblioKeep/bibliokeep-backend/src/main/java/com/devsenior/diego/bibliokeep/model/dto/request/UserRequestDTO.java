@@ -13,7 +13,8 @@ public record UserRequestDTO(
     @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
     String password,
 
-    Set<@NotBlank(message = "El género no puede estar vacío") @Size(max = 100, message = "El género no puede exceder 100 caracteres") String> preferences,
+    Set<@NotBlank(message = "El género no puede estar vacío") @Size(max = 100, message = "El género no puede exceder 100 caracteres") 
+    String> preferences,
 
     @Min(value = 1, message = "La meta anual debe ser al menos 1")
     @Max(value = 1000, message = "La meta anual no puede exceder 1000")

@@ -24,3 +24,14 @@ Content-Type: application/json
     "email": "diego@example.com",
     "password": "diego0925696"
 }
+
+###
+POST http://localhost:8080/api/users/register
+Content-Type: application/json
+
+{
+    "email": "diego@example.com",
+    "password": "diego0925696",
+    "preferences": ["Fantasía", "Ciencia Ficción", "Suspense"],
+    "annualGoal": 12
+}

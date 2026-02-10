@@ -29,18 +29,17 @@ public class AuthServiceImpl implements AuthService {
             var auth = new UsernamePasswordAuthenticationToken(body.email(), body.password());
             authenticationManager.authenticate(auth);
         } catch (BadCredentialsException e) {
-            throw new RuntimeException("Credenciles incorrectas "+e.getMessage());
+            throw new RuntimeException("Credenciles incorrectas " + e.getMessage());
         }
 
         var user = userService.findByEmail(body.email())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         var claims = Map.<String, Object>of(
-            "X-User-Id", user.getId(),
-            "roles", user.getRoles().stream()
-                            .map(r -> r.getName())
-                            .toList()
-        );
+                "X-User-Id", user.getId(),
+                "roles", user.getRoles().stream()
+                        .map(r -> r.getName())
+                        .toList());
 
         var token = jwtService.generateToken(claims, body.email());
 

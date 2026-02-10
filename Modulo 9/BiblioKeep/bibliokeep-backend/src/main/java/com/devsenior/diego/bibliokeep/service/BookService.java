@@ -9,8 +9,6 @@ import java.util.UUID;
 
 public interface BookService {
 
-
-
     BookResponseDTO create(BookRequestDTO request, UUID ownerId);
 
     List<BookResponseDTO> todosLosLibros();

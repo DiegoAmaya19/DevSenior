@@ -8,6 +8,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -17,43 +19,45 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfig {
 
-  @Bean
-  SecurityFilterChain securityFilterChain(HttpSecurity http) {
+   @Bean
+   SecurityFilterChain securityFilterChain(HttpSecurity http) {
 
-    var corsConfigurationSouerce = corsConfigurationSource();
+      var corsConfigurationSouerce = corsConfigurationSource();
 
-    http
-        .csrf(c -> c.disable())
-        .cors(cors -> cors.configurationSource(corsConfigurationSouerce))
-        .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/auth/**").permitAll()
-            .anyRequest().authenticated());
-    return http.build();
-  }
+      http
+            .csrf(c -> c.disable())
+            .cors(cors -> cors.configurationSource(corsConfigurationSouerce))
+            .authorizeHttpRequests(auth -> auth
+                  .requestMatchers("/auth/**").permitAll()
+                  .requestMatchers("/api/users/register").permitAll()
+                  .anyRequest().permitAll());
+      return http.build();
+   }
 
-  // Esta configuracion es para el uso del cors de donde se consumira la Api
-  // Se coloca en el SecurityFilterChain
-  private CorsConfigurationSource corsConfigurationSource() {
-    var configuration = new CorsConfiguration();
+   // Esta configuracion es para el uso del cors de donde se consumira la Api
+   // Se coloca en el SecurityFilterChain
+   private CorsConfigurationSource corsConfigurationSource() {
+      var configuration = new CorsConfiguration();
 
-    configuration.setAllowedOrigins(List.of("http://localhost:4200")); // para que acceda todo el mundo "*"
-    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTION"));
-    configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Tenant-ID", "X-User-id"));
-    configuration.setAllowCredentials(true);
+      configuration.setAllowedOrigins(List.of("http://localhost:4200")); // para que acceda todo el mundo "*"
+      configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTION"));
+      configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Tenant-ID", "X-User-id"));
+      configuration.setAllowCredentials(true);
 
-    var source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);// quiere decir que para cualquier perticion a mi app se usa
-                                                                    // esta configuracion
-    return source;
-  }
+      var source = new UrlBasedCorsConfigurationSource();
+      source.registerCorsConfiguration("/**", configuration);// quiere decir que para cualquier perticion a mi app se
+                                                             // usa
+                                                             // esta configuracion
+      return source;
+   }
 
-  // @Bean
-  // public PasswordEncoder passwordEncoder() {
-  //   return new BCryptPasswordEncoder();
-  // }
+   @Bean
+   public PasswordEncoder passwordEncoder() {
+      return new BCryptPasswordEncoder();
+   }
 
-  @Bean
-  AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) {
-    return configuration.getAuthenticationManager();
-  }
+   @Bean
+   AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) {
+      return configuration.getAuthenticationManager();
+   }
 }
