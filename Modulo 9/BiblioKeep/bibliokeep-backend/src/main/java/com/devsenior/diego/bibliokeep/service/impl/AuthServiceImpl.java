@@ -20,7 +20,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
-    private final JwtService jwtService;
+    private final JwtServiceImpl jwtService;
 
     @Override
     public LoginResponseDTO login(LoginRequestDTO body) {

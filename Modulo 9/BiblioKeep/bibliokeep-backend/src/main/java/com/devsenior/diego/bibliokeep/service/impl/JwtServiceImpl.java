@@ -3,12 +3,15 @@ package com.devsenior.diego.bibliokeep.service.impl;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import com.devsenior.diego.bibliokeep.service.JwtService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -17,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class JwtService {
+public class JwtServiceImpl implements JwtService {
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -41,6 +44,7 @@ public class JwtService {
      * @param subject Asunto del token (generalmente el identificador del usuario)
      * @return Token JWT generado
      */
+    @Override
     public String generateToken(Map<String, Object> claims, String subject) {
         return buildToken(claims, subject, expirationTime);
     }
@@ -55,6 +59,7 @@ public class JwtService {
      * @param expirationTimeMs Tiempo de expiración en milisegundos
      * @return Token JWT generado
      */
+    @Override
     public String generateToken(Map<String, Object> claims, String subject, long expirationTimeMs) {
         return buildToken(claims, subject, expirationTimeMs);
     }
@@ -65,6 +70,7 @@ public class JwtService {
      * @param subject Asunto del token (generalmente el identificador del usuario)
      * @return Token JWT generado
      */
+    @Override
     public String generateToken(String subject) {
         return generateToken(new HashMap<>(), subject);
     }
@@ -101,6 +107,7 @@ public class JwtService {
      * @param token Token JWT a validar
      * @return true si el token es válido, false en caso contrario
      */
+    @Override
     public boolean validateToken(String token) {
         try {
             Jwts.parser()
@@ -131,6 +138,7 @@ public class JwtService {
      * @return Claims del token
      * @throws RuntimeException si el token es inválido
      */
+    @Override
     public Claims getClaims(String token) {
         try {
             return Jwts.parser()
@@ -152,9 +160,10 @@ public class JwtService {
      * @return Valor del claim
      * @throws RuntimeException si el token es inválido o el claim no existe
      */
-    public Object getClaim(String token, String claimKey) {
+    @Override
+    public <T> T getClaim(String token, String claimKey, Class<T> clazz) {
         Claims claims = getClaims(token);
-        return claims.get(claimKey);
+        return claims.get(claimKey, clazz);
     }
 
     /**
@@ -163,6 +172,7 @@ public class JwtService {
      * @param token Token JWT
      * @return Subject del token
      */
+    @Override
     public String getSubject(String token) {
         try {
             return getClaims(token).getSubject();
@@ -177,7 +187,27 @@ public class JwtService {
      *
      * @return Tiempo de expiración en milisegundos
      */
+    @Override
     public long getExpirationTime() {
         return expirationTime;
+    }
+
+    @Override
+    public <T> List<T> getClaimList(String token, String claimKey, Class<T> clazz) {
+        var claims = getClaims(token);
+
+        var value = claims.get(claimKey);
+
+        if (value == null) {
+            return List.of();
+        }
+
+        if (value instanceof List<?> raw) {
+            return raw.stream()
+                    .map(clazz::cast)
+                    .toList();
+        }
+
+        return List.of();
     }
 }
