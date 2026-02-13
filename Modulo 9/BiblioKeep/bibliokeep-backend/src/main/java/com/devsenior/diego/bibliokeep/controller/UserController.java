@@ -7,18 +7,18 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:4200") // Permite el acceso desde Angular
 @RestController
-@RequestMapping("/api/users")
 @RequiredArgsConstructor
+@RequestMapping("/api/users")
 public class UserController {
 
     private final UserService userService;
-
+    
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
@@ -26,7 +26,7 @@ public class UserController {
         return userService.create(request);
     }
 
-    @GetMapping
+    @GetMapping()
     public List<UserResponseDTO> findAll() {
         return userService.findAll();
     }

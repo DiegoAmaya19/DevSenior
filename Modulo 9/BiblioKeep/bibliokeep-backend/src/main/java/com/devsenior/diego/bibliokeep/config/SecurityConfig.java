@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.authentication.corsConfiguration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.corsConfiguration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,8 +25,8 @@ public class SecurityConfig {
       var corsConfigurationSouerce = corsConfigurationSource();
 
       http
-            .csrf(c -> c.disable())
-            .cors(cors -> cors.configurationSource(corsConfigurationSouerce))
+            .csrf(c -> c.disable()) // desactiva las sesiones por seguridad
+            .cors(cors -> cors.configurationSource(corsConfigurationSouerce)) // maneja de los origenes de peticiones
             .authorizeHttpRequests(auth -> auth
                   .requestMatchers("/auth/**").permitAll()
                   .requestMatchers("/api/users/**").permitAll()
@@ -37,15 +37,15 @@ public class SecurityConfig {
    // Esta configuracion es para el uso del cors de donde se consumira la Api
    // Se coloca en el SecurityFilterChain
    private CorsConfigurationSource corsConfigurationSource() {
-      var configuration = new CorsConfiguration();
+      var corsConfiguration = new CorsConfiguration();
 
-      configuration.setAllowedOrigins(List.of("http://localhost:4200")); // para que acceda todo el mundo "*"
-      configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTION"));
-      configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Tenant-ID", "X-User-id"));
-      configuration.setAllowCredentials(true);
+      corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200"));   // Nota: para que acceda todo el mundo "*"
+      corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTION"));
+      corsConfiguration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Tenant-ID", "X-User-id"));
+      corsConfiguration.setAllowCredentials(true);
 
       var source = new UrlBasedCorsConfigurationSource();
-      source.registerCorsConfiguration("/**", configuration);// quiere decir que para cualquier perticion a mi app se
+      source.registerCorsConfiguration("/**", corsConfiguration);// quiere decir que para cualquier perticion a mi app se
                                                              // usa
                                                              // esta configuracion
       return source;
@@ -57,7 +57,7 @@ public class SecurityConfig {
    }
 
    @Bean
-   AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) {
-      return configuration.getAuthenticationManager();
+   AuthenticationManager authenticationManager(AuthenticationConfiguration corsConfiguration) {
+      return corsConfiguration.getAuthenticationManager();
    }
 }
