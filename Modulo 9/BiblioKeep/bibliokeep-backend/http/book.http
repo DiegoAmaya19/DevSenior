@@ -12,26 +12,3 @@ X-User-Id: f53b6038-52dd-45de-a123-1ebcd597efd5
 GET  http://localhost:8080/api/books
 Authorization: Bearer f0bb3caf-9407-4f2b-802b-33ebb24959cf
 Accept: application/json
-
-###
-GET http://localhost:8080/api/stats/dashboard/f53b6038-52dd-45de-a123-1ebcd597efd5
-
-###
-POST http://localhost:8080/auth/login
-Content-Type: application/json
-
-{
-    "email": "diego@example.com",
-    "password": "diego0925696"
-}
-
-###
-POST http://localhost:8080/api/users/register
-Content-Type: application/json
-
-{
-    "email": "maria@example.com",
-    "password": "maria123",
-    "preferences": ["Fantasía", "Accion", "Suspense"],
-    "annualGoal": 10
-}

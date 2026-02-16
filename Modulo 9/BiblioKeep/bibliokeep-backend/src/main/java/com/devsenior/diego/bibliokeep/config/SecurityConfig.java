@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -20,7 +21,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
 
    @Bean
-   SecurityFilterChain securityFilterChain(HttpSecurity http) {
+   SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) {
 
       var corsConfigurationSouerce = corsConfigurationSource();
 
@@ -29,8 +30,8 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSouerce)) // maneja de los origenes de peticiones
             .authorizeHttpRequests(auth -> auth
                   .requestMatchers("/auth/**").permitAll()
-                  .requestMatchers("/api/users/**").permitAll()
-                  .anyRequest().authenticated());
+                  .anyRequest().authenticated())
+                     .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
       return http.build();
    }
 
@@ -39,15 +40,17 @@ public class SecurityConfig {
    private CorsConfigurationSource corsConfigurationSource() {
       var corsConfiguration = new CorsConfiguration();
 
-      corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200"));   // Nota: para que acceda todo el mundo "*"
+      corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200")); // Nota: para que acceda todo el mundo "*"
       corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTION"));
       corsConfiguration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Tenant-ID", "X-User-id"));
       corsConfiguration.setAllowCredentials(true);
 
       var source = new UrlBasedCorsConfigurationSource();
-      source.registerCorsConfiguration("/**", corsConfiguration);// quiere decir que para cualquier perticion a mi app se
-                                                             // usa
-                                                             // esta configuracion
+      source.registerCorsConfiguration("/**", corsConfiguration);// quiere decir que para cualquier perticion a mi app
+                                                                 
+      // se
+      // usa
+      // esta configuracion
       return source;
    }
 

@@ -6,6 +6,8 @@ import com.devsenior.diego.bibliokeep.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,14 +27,15 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
-    
+
+    // @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserResponseDTO create(@Valid @RequestBody UserRequestDTO request) {
-        return userService.create(request);
+    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRequestDTO request) {
+        return ResponseEntity.ok(userService.create(request));
     }
 
-    @GetMapping("all")
+    @GetMapping("/all")
     public List<UserResponseDTO> findAll() {
         return userService.findAll();
     }
@@ -44,7 +47,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     public UserResponseDTO update(@PathVariable UUID id,
-                                  @Valid @RequestBody UserRequestDTO request) {
+            @Valid @RequestBody UserRequestDTO request) {
         return userService.update(id, request);
     }
 
