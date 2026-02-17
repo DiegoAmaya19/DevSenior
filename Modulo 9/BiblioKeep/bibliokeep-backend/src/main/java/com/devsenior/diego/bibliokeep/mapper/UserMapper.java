@@ -17,7 +17,8 @@ public interface UserMapper {
     @Mapping(target = "annualGoal", defaultValue = "12")
     User toEntity(UserRequestDTO dto);
 
-    // "password" does not exist on UserResponseDTO, so we remove the invalid mapping
+    // "password" does not exist on UserResponseDTO, so we remove the invalid
+    // mapping
     UserResponseDTO toResponseDTO(User entity);
 
     @Mapping(target = "id", ignore = true)

@@ -23,6 +23,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,10 +66,9 @@ public class User {
     private Integer annualGoal = 12;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "user_roles",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "roles_id")
-    )
-    private List<Role> roles;
+    @JoinTable(name = "user_roles", joinColumns = 
+    @JoinColumn(name = "user_id"), inverseJoinColumns = 
+    @JoinColumn(name = "roles_id"))
+    @Builder.Default
+    private List<Role> roles = new ArrayList<>();
 }

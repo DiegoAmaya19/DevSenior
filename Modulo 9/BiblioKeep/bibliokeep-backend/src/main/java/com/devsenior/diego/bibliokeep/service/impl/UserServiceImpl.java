@@ -1,10 +1,12 @@
-    package com.devsenior.diego.bibliokeep.service.impl;
+package com.devsenior.diego.bibliokeep.service.impl;
 
 import com.devsenior.diego.bibliokeep.mapper.UserMapper;
 import com.devsenior.diego.bibliokeep.model.dto.request.UserRequestDTO;
 import com.devsenior.diego.bibliokeep.model.dto.response.UserResponseDTO;
+import com.devsenior.diego.bibliokeep.model.entity.Role;
 import com.devsenior.diego.bibliokeep.model.entity.User;
 import com.devsenior.diego.bibliokeep.repository.UserRepository;
+import com.devsenior.diego.bibliokeep.service.RoleService;
 import com.devsenior.diego.bibliokeep.service.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -24,10 +26,12 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final RoleService roleService;
 
     @Override
     @Transactional
     public UserResponseDTO create(UserRequestDTO request) {
+
         if (userRepository.findByEmail(request.email()).isPresent()) {
             throw new RuntimeException("El email ya está registrado");
         }
@@ -35,6 +39,10 @@ public class UserServiceImpl implements UserService {
         var user = userMapper.toEntity(request);
         user.setPassword(passwordEncoder.encode(request.password()));
         user = userRepository.save(user);
+
+        List<Role> listRoles = roleService.findAllByIdList(request.rolesId()).stream().toList();
+
+        user.setRoles(listRoles);
 
         return userMapper.toResponseDTO(user);
     }

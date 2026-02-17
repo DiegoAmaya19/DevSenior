@@ -5,13 +5,12 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJYLVVzZXItSWQiOiJmNTNiNjAzOC01MmRkL
 
 ###
 POST http://localhost:8080/api/users/register
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sIlgtVXNlci1JZCI6ImY1M2I2MDM4LTUyZGQtNDVkZS1hMTIzLTFlYmNkNTk3ZWZkNSIsInN1YiI6ImRpZWdvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzcxMjEwOTI3LCJleHAiOjE3NzEyOTczMjd9.TxtX-eo2XS9I79f2UjAUZDyOj-PbYoK5sj-4sXzygKB2g6XP9Lxjj6l7UhXnDbZF
 Content-Type: application/json
 
 {
-    "email": "fernanda@gmail.com",
-    "password": "fernanda123",
+    "email": "martha@gmail.com",
+    "password": "martha123",
     "preferences": ["Fantasía", "Accion", "Suspense"],
-    "annualGoal": 7,
-    "roles": ["ROLE_USER"]
+    "annualGoal": 3,
+    "rolesId": [2]
 }
