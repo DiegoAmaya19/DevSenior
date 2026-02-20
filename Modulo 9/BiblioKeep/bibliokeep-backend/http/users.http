@@ -8,9 +8,9 @@ POST http://localhost:8080/api/users/register
 Content-Type: application/json
 
 {
-    "email": "martha@gmail.com",
-    "password": "martha123",
+    "email": "carlos@gmail.com",
+    "password": "carlos123",
     "preferences": ["Fantasía", "Accion", "Suspense"],
-    "annualGoal": 3,
+    "annualGoal": 5,
     "rolesId": [2]
 }
