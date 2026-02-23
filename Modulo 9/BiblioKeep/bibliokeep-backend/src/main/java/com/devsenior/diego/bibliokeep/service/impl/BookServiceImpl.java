@@ -37,6 +37,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public BookResponseDTO findById(Long id) {
+        var book = bookRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Libro no encontrado o no pertenece al usuario"));
+        return bookMapper.toResponseDTO(book);
+    }
+
+    @Override
     public BookResponseDTO findById(Long id, UUID ownerId) {
         var book = bookRepository.findByIdAndOwnerId(id, ownerId)
                 .orElseThrow(() -> new RuntimeException("Libro no encontrado o no pertenece al usuario"));

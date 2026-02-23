@@ -15,6 +15,8 @@ public interface BookService {
 
     List<BookResponseDTO> findAllByOwnerId(UUID ownerId);
 
+    BookResponseDTO findById(Long id);
+
     BookResponseDTO findById(Long id, UUID ownerId);
 
     BookResponseDTO update(Long id, BookRequestDTO request, UUID ownerId);
