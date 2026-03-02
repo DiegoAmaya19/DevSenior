@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.devsenior.diego.bibliokeep.model.dto.request.LoginRequestDTO;
 import com.devsenior.diego.bibliokeep.model.dto.response.LoginResponseDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 @SpringBootTest()
 @AutoConfigureMockMvc
@@ -31,7 +31,10 @@ public class AuthControllerIT {
     @DisplayName("Inicio de secion con usuario y contrasena")
     public void loginSuccess() throws JsonProcessingException, Exception {
         // Arrange
-        var request = new LoginRequestDTO("diego@example.com", "diego0925696");
+        var request = new LoginRequestDTO(
+            "diego@example.com", 
+            "diego0925696");
+
         // Act
         var result = mockMvc.perform(MockMvcRequestBuilders.post("/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
